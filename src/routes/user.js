@@ -1,5 +1,6 @@
 const express = require("express");
 const router = new express.Router();
+const auth = require('../middleware/auth');
 const User = require("../models/user");
 router.post("/users", async (req, res) => {
   const user = new User(req.body);
@@ -36,7 +37,7 @@ router.post("/users/login", async (req, res) => {
   }
 });
 
-router.get("/users", async (req, res) => {
+router.get("/users", auth,async (req, res) => {
   try {
     const users = await User.find({});
     res.send(users);
@@ -73,8 +74,8 @@ router.get("/users/:id", async (req, res) => {
 router.patch("/users/:id", async (req, res) => {
   const updates = Object.keys(req.body);
   const allowedUpdates = ["name", "email", "password", "age"];
-  const isValidOperation = updates.every(() =>
-    allowedUpdates.includes(updates)
+  const isValidOperation = updates.every((update) =>
+    allowedUpdates.includes(update)
   );
 
   if (!isValidOperation) {
