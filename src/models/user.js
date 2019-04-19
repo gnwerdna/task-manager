@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-
+const Task = require("../models/task");
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -55,6 +55,13 @@ const userSchema = new mongoose.Schema({
   ]
 });
 
+//create virtuals tasks properties, it do not add in db
+userSchema.virtual("tasks", {
+  ref: "Task",
+  localField: "_id",
+  foreignField: "owner"
+});
+
 //define findByCredentials which function will use in routes
 userSchema.statics.findByCredentials = async (email, password) => {
   const user = await User.findOne({ email });
@@ -69,6 +76,17 @@ userSchema.statics.findByCredentials = async (email, password) => {
   }
   return user;
 };
+
+userSchema.methods.getPublicProfile = function() {
+  const user = this;
+  const userObject = user.toObject();
+
+  delete userObject.password;
+  delete userObject.tokens;
+
+  return userObject;
+};
+
 //generating auth token
 userSchema.methods.generateAuthToken = async function() {
   const user = this;
@@ -86,6 +104,13 @@ userSchema.pre("save", async function(next) {
     user.password = await bcrypt.hash(user.password, 8);
   }
 
+  next();
+});
+
+userSchema.pre("remove", async function(next) {
+  const user = this;
+
+  await Task.deleteMany({ owner: user._id });
   next();
 });
 const User = mongoose.model("User", userSchema);
