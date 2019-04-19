@@ -53,6 +53,8 @@ const userSchema = new mongoose.Schema({
       }
     }
   ]
+}, {
+  timestamps: true
 });
 
 //create virtuals tasks properties, it do not add in db
