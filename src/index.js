@@ -15,6 +15,24 @@ app.listen(PORT, () => {
   console.log("Server is up on port " + PORT);
 });
 
+//try test multer
+const multer = require('multer');
+const upload = multer({
+  dest: 'images',
+  limits: {
+    fileSize: 100000
+  },
+  fileFilter(req, file, callback) {
+    if(!file.originalname.endsWith(".pdf")) {
+      return callback(new Error("please upload a pdf file."));
+    }
+    callback(undefined, true);
+  }
+});
+
+app.post('/upload', upload.single('avatar'), (req, res) => {
+  res.send();
+});
 // const jwt = require("jsonwebtoken");
 // const myFunction = async () => {
 //   const token = jwt.sign({ _id: "abc123" }, "thisissecretkey", {
