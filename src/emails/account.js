@@ -1,13 +1,12 @@
 const nodemailer = require("nodemailer");
-console.log("kasdkj");
 async function sendWelcomeEmail(email, name) {
   let transporter = nodemailer.createTransport({
     service: "gmail",
     secure: false,
     port: 25,
     auth: {
-      user: "dangdainguyen.cs@gmail.com",
-      pass: "daihuy3n132496"
+      user: process.env.USER,
+      pass: process.env.PASS
     },
     tls: {
       rejectUnauthorized: false
@@ -30,8 +29,8 @@ async function sendCancelledEmail(email, name) {
     secure: false,
     port: 25,
     auth: {
-      user: "dangdainguyen.cs@gmail.com",
-      pass: "daihuy3n132496"
+      user: process.env.USER,
+      pass: process.env.PASS
     },
     tls: {
       rejectUnauthorized: false
