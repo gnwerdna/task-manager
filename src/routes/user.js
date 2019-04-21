@@ -4,11 +4,13 @@ const auth = require("../middleware/auth");
 const User = require("../models/user");
 const multer = require("multer");
 const storage = multer.memoryStorage();
+const { sendWelcomeEmail, sendCancelledEmail } = require('../emails/account');
 
 router.post("/users", async (req, res) => {
   const user = new User(req.body);
   try {
     await user.save();
+    sendWelcomeEmail(user.email, user.name);
     const token = await user.generateAuthToken();
     res.status(201).send({ user, token });
   } catch (e) {
@@ -154,6 +156,7 @@ router.patch("/users/me", auth, async (req, res) => {
 router.delete("/users/me", auth, async (req, res) => {
   try {
     await req.user[0].remove();
+    sendCancelledEmail(req.user[0].email, req.user[0].name);
     res.send(req.user[0]);
   } catch (e) {
     res.status(500).send(e);
