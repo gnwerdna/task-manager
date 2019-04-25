@@ -1,0 +1,16 @@
+.Task {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    margin-top: 100px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    height: 50px;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.TaskName {
+    align-items: center;
+}

@@ -1,0 +1,37 @@
+.Button {
+    padding: 10px;
+    margin: 10px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    margin-left: 0;
+    
+}
+.Success {
+    background: #28a745;
+    color: white;
+}
+
+.Danger {
+    background: #dc3545;
+    color: white;
+}
+
+.Warning {
+    background:#ffc107;
+    color: white;
+}
+
+.Info {
+    background: #17a2b8;
+    color: white;
+}
+
+.Primary {
+    background: #007bff;
+    color: white;
+}
+

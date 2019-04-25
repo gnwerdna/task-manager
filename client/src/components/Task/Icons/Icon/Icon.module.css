@@ -1,0 +1,23 @@
+.Icon {
+    height: 100%;
+    background: transparent;
+    align-items: center;
+    cursor: pointer;
+    padding: 0 10px;
+}
+
+.Danger {
+    color: #dc3545;
+}
+
+.Warning {
+    color: #ffc107;
+}
+
+.Danger:hover {
+    color: #c82333;
+}
+
+.Warning:hover {
+    color: #e0a800;
+}

@@ -1,0 +1,37 @@
+.NavigationItem {
+  margin: 10px 0;
+  width: 100%;
+  display: block;
+  box-sizing: border-box;
+}
+
+.NavigationItem a {
+  text-decoration: none;
+  box-sizing: border-box;
+  color: #3b5ca0;
+}
+
+.NavigationItem a:hover {
+  color: black;
+}
+
+@media (min-width: 500px) {
+  .NavigationItem {
+    height: 100%;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+  }
+
+  .NavigationItem:hover {
+    background: #3b5ca0;
+  }
+
+  .NavigationItem a {
+    padding: 16px 10px;
+    text-decoration: none;
+    box-sizing: border-box;
+    color: white;
+  }
+}
