@@ -1,16 +1,17 @@
 import React from "react";
 import Aux from "../../hoc/Aux/Aux";
 import Modal from "../../components/UI/Modal/Modal";
-import Task from '../../components/Task/Task';
+import Task from "../../components/Task/Task";
 import EditTask from "../../components/Task/EditTask/EditTask";
 class TaskBuilder extends React.Component {
   state = {
-    isShowBackdrop: false
+    isShowBackdrop: false,
+    isCompleted: false
   };
 
-  openModalHandler=() => {
-    this.setState({isShowBackdrop: true})
-  }
+  openModalHandler = () => {
+    this.setState({ isShowBackdrop: true });
+  };
 
   closeModalHandler = () => {
     this.setState({ isShowBackdrop: false });
@@ -22,6 +23,11 @@ class TaskBuilder extends React.Component {
     });
   };
 
+  completeHandler = () => {
+    this.setState(prevState => {
+      return { isCompleted: !prevState.isCompleted };
+    });
+  };
   render() {
     return (
       <Aux>
@@ -30,9 +36,15 @@ class TaskBuilder extends React.Component {
           closeModal={this.closeModalHandler}
           modalToggle={this.toggleModalHandler}
         >
-          <EditTask cancelClicked={this.closeModalHandler}/>
+          <EditTask cancelClicked={this.closeModalHandler} />
         </Modal>
-        <Task showModal={this.openModalHandler}>askjdkajsd</Task>
+        <Task
+          completed={this.completeHandler}
+          showModal={this.openModalHandler}
+          isCompleted={this.state.isCompleted}
+        >
+          askjdkajsd
+        </Task>
       </Aux>
     );
   }

@@ -2,6 +2,7 @@
     display: flex;
     flex-flow: row;
     justify-content: space-between;
+    margin: auto;
     margin-top: 100px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -9,8 +10,21 @@
     height: 50px;
     align-items: center;
     box-sizing: border-box;
+    width: 80%;
 }
 
 .TaskName {
     align-items: center;
+}
+
+.CompletedTask {
+    text-decoration: line-through;
+    color: grey;
+    font-style: italic;
+}
+
+@media (min-width: 600px) {
+    .Task {
+        width: 500px;
+    }
 }
