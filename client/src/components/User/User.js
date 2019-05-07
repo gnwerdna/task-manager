@@ -1,16 +1,36 @@
-import React from 'react'
-import classes from './User.module.css'
+import React from "react";
+import AvatarModal from "./AvatarModal/AvatarModal";
+import classes from "./User.module.css";
 
-const user = props => (
-    <div className={classes.User}>
+class User extends React.Component {
+  state = {
+    showModal: false
+  };
+
+  showModalHandler = () => {
+    this.setState(prevState => {
+      return { showModal: !prevState.showModal };
+    });
+  };
+  render() {
+    return (
+      <div className={classes.User}>
         <div>
-            <img className={classes.Avatar} alt="avatar" src="https://picsum.photos/200"/>
+          <AvatarModal
+            src="https://picsum.photos/200"
+            showModal={this.state.showModal}
+            modalToggle={this.showModalHandler}
+          />
         </div>
         <div className={classes.UserInfo}>
-            <div className={classes.Name}>Name</div>
-            <div className={classes.Email}><i>Email</i></div>
+          <div className={classes.Name}>{this.props.user.name}</div>
+          <div className={classes.Email}>
+            <i>{this.props.user.email}</i>
+          </div>
         </div>
-    </div>
-)
+      </div>
+    );
+  }
+}
 
-export default user;
+export default User;

@@ -11,12 +11,12 @@ const modal = props => (
     <div
       className={classes.Modal}
       style={{
-        transform: props.showModal ? "translateY(0)" : "translateY(-1000vh)"
+        transform: props.showModal ? "translateY(0)" : "translateY(-1000vh)",
+        alignItems: props.center ? "center": ""
       }}
     >
       {props.children}
     </div>
-    ;
   </Aux>
 );
 

@@ -1,12 +1,12 @@
 const express = require("express");
 const router = new express.Router();
 const auth = require("../middleware/auth");
-const User = require("../models/user");
+const User = require("../models/user"); 
 const multer = require("multer");
 const storage = multer.memoryStorage();
 const { sendWelcomeEmail, sendCancelledEmail } = require("../emails/account");
 
-//login in user
+//get all user
 router.get("/users", async (req, res) => {
   try {
     const users = await User.find({});
@@ -14,11 +14,6 @@ router.get("/users", async (req, res) => {
   } catch (e) {
     res.send(e);
   }
-  //   User.find({})
-  //     .then(users => {
-  //       res.send(users);
-  //     })
-  //     .catch(err => res.send(err));
 });
 
 router.get("/users/me", auth, async (req, res) => {
@@ -44,27 +39,21 @@ router.get("/users/:id", async (req, res) => {
   //     })
   //     .catch(err => res.status(500).send(err));
 });
-
-router.post("/users", async (req, res) => {
-  const user = new User(req.body);
+//create an user
+router.post("/user/register", async (req, res) => {
+  const newUser = new User(req.body);
   try {
-    await user.save();
-    sendWelcomeEmail(user.email, user.name);
-    const token = await user.generateAuthToken();
-    res.status(201).send({ user, token });
+    const user = await User.findOne({ email: req.body.email});
+    if(user) {
+      throw new Error("Email is exist!");
+    }
+    await newUser.save();
+    // sendWelcomeEmail(user.email, user.name);
+    const token = await newUser.generateAuthToken();
+    res.send({ user:user, token: token });
   } catch (e) {
-    res.status(400).send(e);
+    res.send({error: e.message} );
   }
-
-  //   user
-  //     .save()
-  //     .then(() => {
-  //       res.send(user);
-  //     })
-  //     .catch(err => {
-  //       res.status(400);
-  //       res.send(err);
-  //     });
 });
 
 router.post("/users/login", async (req, res) => {
@@ -75,25 +64,25 @@ router.post("/users/login", async (req, res) => {
     );
     const token = await user.generateAuthToken();
     // console.log(user.getPublicProfile());
-    res.send({ user: user.getPublicProfile(), token });
+    res.send({ user: user.getPublicProfile(), token: token });
   } catch (e) {
-    res.status(400).send(e);
+    res.send({ error: e });
   }
 });
 
-router.post("/users/logout", auth, async (req, res) => {
+router.post("/me/logout", auth, async (req, res) => {
   try {
     req.user.tokens = req.user.tokens.filter(token => {
       return token.token !== req.token;
     });
     await req.user.save();
     res.send();
-  } catch (e) {
+  } catch (e) { 
     res.status(500).send(e);
   }
 });
 
-router.post("/users/logoutAll", auth, async (req, res) => {
+router.post("/me/logoutAll", auth, async (req, res) => {
   try {
     req.user[0].tokens = [];
     console.log(req.user);

@@ -15,6 +15,7 @@
   color: black;
 }
 
+
 @media (min-width: 500px) {
   .NavigationItem {
     height: 100%;
@@ -33,5 +34,14 @@
     text-decoration: none;
     box-sizing: border-box;
     color: white;
+    border-bottom: 3px solid transparent;
+  }
+
+  .NavigationItem a:hover,
+  .NavigationItem a:active,
+  .NavigationItem a.active {
+    background: #3b5ca0;
+    color: white;
+    border-bottom: 3px solid white;
   }
 }

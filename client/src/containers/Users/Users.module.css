@@ -1,0 +1,11 @@
+.Users {
+    margin: auto;
+    margin-top: 150px;
+    width: 50%;
+}
+
+@media (max-width: 499px) {
+    .Users {
+        width: 75%;
+    }
+}

@@ -1,9 +1,12 @@
 .Login {
     margin: auto;
-    margin-top: 25%;
-    padding: 0;
+    margin-top: 20%;
+    padding: 50px;
     width: 80%;
     align-content: center;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 0 5px grey;
 }
 
 @media (min-width: 600px) {

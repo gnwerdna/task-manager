@@ -6,7 +6,8 @@ import EditTask from "../../components/Task/EditTask/EditTask";
 class TaskBuilder extends React.Component {
   state = {
     isShowBackdrop: false,
-    isCompleted: false
+    isCompleted: false,
+    taskData: null
   };
 
   openModalHandler = () => {
@@ -16,6 +17,8 @@ class TaskBuilder extends React.Component {
   closeModalHandler = () => {
     this.setState({ isShowBackdrop: false });
   };
+  componentDidMount() {
+  }
 
   toggleModalHandler = () => {
     this.setState(prevState => {
@@ -36,7 +39,7 @@ class TaskBuilder extends React.Component {
           closeModal={this.closeModalHandler}
           modalToggle={this.toggleModalHandler}
         >
-          <EditTask cancelClicked={this.closeModalHandler} />
+        <EditTask cancelClicked={this.closeModalHandler} />
         </Modal>
         <Task
           completed={this.completeHandler}

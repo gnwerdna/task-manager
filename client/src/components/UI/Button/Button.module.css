@@ -7,9 +7,15 @@
     cursor: pointer;
     border: none;
     border-radius: 5px;
-    margin-left: 0;
-    
+    margin-right: 0; 
 }
+
+.Button:disabled {
+    color: black;
+    background: #ccc;
+    cursor: not-allowed;
+}
+
 .Success {
     background: #28a745;
     color: white;
