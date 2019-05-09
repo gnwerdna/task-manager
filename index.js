@@ -1,7 +1,8 @@
+const cors = require('cors');
 require("dotenv").config();
 const express = require("express");
 const app = express();
-const cors = require('cors');
+app.use(cors());
 const mongoose = require("mongoose");
 const userRouter = require("./src/routes/user");
 const taskRouter = require("./src/routes/task");
@@ -23,7 +24,6 @@ app.use(urlencodedParser);
 app.use(bodyParser.json());
 
 app.use(express.json());
-app.use(cors());
 app.use(userRouter);
 app.use(taskRouter);
 

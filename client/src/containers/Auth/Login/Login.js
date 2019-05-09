@@ -2,7 +2,7 @@ import React from "react";
 import Button from "../../../components/UI/Button/Button";
 import Input from "../../../components/UI/Input/Input";
 import classes from "./Login.module.css";
-
+import { BASE_URL} from '../../../constant/abstract'
 class Login extends React.Component {
   state = {
     loginForm: {
@@ -72,38 +72,36 @@ class Login extends React.Component {
     this.setState({ loginForm: updatedLoginForm, formIsValid: formIsValid });
   };
 
-  checkAuthTimeout = (exprirationTime) => {
+  checkAuthTimeout = exprirationTime => {
     return setTimeout(() => {
       localStorage.clear();
     }, exprirationTime);
-  }
+  };
 
-  handleSubmit = (event) => {
+  handleSubmit = async event => {
     event.preventDefault();
     const email = this.state.loginForm.email.value;
     const password = this.state.loginForm.password.value;
     const authData = {
       email: email,
       password: password
-    }
-    fetch("/users/login", {
+    };
+    const data = await fetch(BASE_URL + "/users/login", {
       method: "post",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
       body: JSON.stringify(authData)
-    })
-    .then(res => res.json)
-    .then(resData => {
-      if(resData.error) {
-        this.setState({errorMessage: resData.error});
-      } else {
-        localStorage.setItem("token", resData.token);
-        this.props.history.push("/");
-        this.checkAuthTimeout(3600000);
-      }
-    })
-  }
+    });
+    const resData = await data.json();
+    if (resData.error) {
+      this.setState({ errorMessage: resData.error });
+    } else {
+      localStorage.setItem("token", resData.token);
+      this.props.history.push("/");
+      this.checkAuthTimeout(3600000);
+    }
+  };
 
   render() {
     const formElementsArray = [];

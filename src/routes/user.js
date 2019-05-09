@@ -17,7 +17,7 @@ router.get("/users", async (req, res) => {
 });
 
 router.get("/users/me", auth, async (req, res) => {
-  res.send(req.user);
+  res.send({user: req.user});
 });
 
 router.get("/users/:id", async (req, res) => {
@@ -39,6 +39,7 @@ router.get("/users/:id", async (req, res) => {
   //     })
   //     .catch(err => res.status(500).send(err));
 });
+
 //create an user
 router.post("/user/register", async (req, res) => {
   const newUser = new User(req.body);
@@ -56,7 +57,7 @@ router.post("/user/register", async (req, res) => {
   }
 });
 
-router.post("/users/login", async (req, res) => {
+router.post("/users/login", async (req, res) => { 
   try {
     const user = await User.findByCredentials(
       req.body.email,
@@ -64,7 +65,7 @@ router.post("/users/login", async (req, res) => {
     );
     const token = await user.generateAuthToken();
     // console.log(user.getPublicProfile());
-    res.send({ user: user.getPublicProfile(), token: token });
+    res.send({ token: token });
   } catch (e) {
     res.send({ error: e });
   }
@@ -103,14 +104,11 @@ router.patch("/users/me", auth, async (req, res) => {
   if (!isValidOperation) {
     res.status(400).send({ error: "invalid updated" });
   }
+  const user = req.user[0];
   try {
-    const user = await User.findById(req.params.id);
-    if (!user) {
-      res.status(404).send("cannot find this user.");
-    }
-    updates.forEach(update => (req.user[update] = req.body[update]));
-    await req.user.save();
-    res.send(req.user);
+    updates.forEach(update => (user[update] = req.body[update]));
+    await user.save();
+    res.send({user :req.user});
   } catch (e) {
     res.status(400).send(e);
   }

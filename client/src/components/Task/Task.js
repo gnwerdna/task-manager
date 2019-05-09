@@ -1,22 +1,21 @@
 import React from "react";
 import classes from "./Task.module.css";
 import Icons from "./Icons/Icons";
-class Task extends React.Component {
-  render() {
-    return (
-      <div className={classes.Task}>
-        <div
-          onClick={this.props.completed}
-          className={this.props.isCompleted ? classes.CompletedTask : ""}
-        >
-          {this.props.children}
-        </div>
-        <div>
-          <Icons showModal={this.props.showModal} />
-        </div>
+import Aux from "../../hoc/Aux/Aux";
+const task = props => (
+  <Aux>
+    <div className={classes.Task}> 
+      <div
+        onClick={props.completed}
+        className={props.isCompleted ? classes.CompletedTask : ""}
+      >
+        {props.children}
       </div>
-    );
-  }
-}
+      <div>
+        <Icons deleteTask={props.deleteTask} showModal={props.showModal} />
+      </div>
+    </div>
+  </Aux>
+); 
 
-export default Task;
+export default task;

@@ -180,8 +180,6 @@ class Register extends React.Component {
             Register
           </Button>
         </form>
-
-        <Button>Cancel</Button>
       </div>
     );
   }

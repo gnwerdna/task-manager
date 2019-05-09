@@ -7,7 +7,7 @@ const icons = props => (
     <Icon iconType="Warning" clicked={props.showModal}>
       <i className="fas fa-pen" />
     </Icon>
-    <Icon iconType="Danger">
+    <Icon iconType="Danger" clicked={props.deleteTask}>
       <i className="fas fa-times" />
     </Icon>
   </ul>

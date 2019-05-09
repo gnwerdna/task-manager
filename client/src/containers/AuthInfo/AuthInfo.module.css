@@ -1,0 +1,35 @@
+.AuthInfo {
+    width: 80%;
+    margin: auto;
+    margin-top: 150px;
+}
+
+.MainContent {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+}
+
+.Avatar {
+    display: flex;
+    flex-flow: column;
+}
+
+.Avatar button {
+    margin: auto;
+}
+
+.UploadAvatar {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+}
+
+.UploadAvatar input[type=file] {
+    position: absolute;
+    height: 300px;
+    width: 300px;
+    left: 0;
+    top:0;
+    opacity: 0;
+}

@@ -11,7 +11,7 @@ const input = props => {
     inputClass.push(classes.Invalid);
     validationError = (
       <p className={classes.ValidationError}>Please enter a valid value!</p>
-    );
+    ); 
   }
   return (
     <div className={classes.Input}>

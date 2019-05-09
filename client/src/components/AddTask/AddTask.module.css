@@ -1,0 +1,41 @@
+.AddTask {
+    width: 40%;
+    margin: auto;
+    margin-top: 150px;
+    padding: 10px;
+}
+
+.Input {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+    padding:10px;
+    font-size: 1.2rem;
+    width: 100%;
+    background: #e5f5f9;
+}
+
+.Button {
+    border: 1px solid transparent;
+    background:#4267B2;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+.Button:disabled {
+    cursor: not-allowed;
+}
+
+.ErrorMessage {
+    color: red;
+}
+
+@media (max-width: 499px) {
+    .AddTask {
+        width: 80%;
+    }
+}
