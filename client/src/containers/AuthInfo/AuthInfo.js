@@ -131,11 +131,11 @@ class AuthInfo extends React.Component {
       updatedFormElement.value,
       updatedFormElement.validation
     );
+    updatedAuthForm[inputIndentifier] = updatedFormElement;
     let formIsValid = true;
     for (let inputIndentifier in updatedAuthForm) {
       formIsValid = updatedAuthForm[inputIndentifier].valid && formIsValid;
     }
-    updatedAuthForm[inputIndentifier] = updatedFormElement;
     this.setState({
       AuthInfo: updatedAuthForm,
       formIsValid: formIsValid

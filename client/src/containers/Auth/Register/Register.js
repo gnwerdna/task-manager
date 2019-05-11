@@ -136,11 +136,11 @@ class Register extends React.Component {
       updatedFormElement.value,
       updatedFormElement.validation
     );
+    updatedRegisterForm[inputIndentifier] = updatedFormElement;
     let formIsValid = true;
     for (let inputIndentifier in updatedRegisterForm) {
       formIsValid = updatedRegisterForm[inputIndentifier].valid && formIsValid;
     }
-    updatedRegisterForm[inputIndentifier] = updatedFormElement;
     this.setState({
       registerForm: updatedRegisterForm,
       formIsValid: formIsValid

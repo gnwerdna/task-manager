@@ -12,7 +12,7 @@ const task = props => (
         {props.children}
       </div>
       <div>
-        <Icons delete Task={props.deleteTask} showModal={props.showModal} />
+        <Icons deleteTask={props.deleteTask} showModal={props.showModal} />
       </div>
     </div>
   </Aux>

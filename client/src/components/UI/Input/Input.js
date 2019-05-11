@@ -21,7 +21,7 @@ const input = props => {
       <input
         value={props.value}
         className={inputClass.join(" ")}
-        onChange={props.changed}
+        onInput={props.changed}
         {...props.elementConfig}
       />
       {validationError}

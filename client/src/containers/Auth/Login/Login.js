@@ -39,10 +39,12 @@ class Login extends React.Component {
 
   checkValidity = (value, rules) => {
     let isValid = true;
+    if (!rules) {
+      return true;
+    }
     if (rules.required) {
       isValid = value.trim() !== "" && isValid;
     }
-
     if (rules.minLength) {
       isValid = value.length >= rules.minLength && isValid;
     }
@@ -63,12 +65,12 @@ class Login extends React.Component {
       updatedFormElement.value,
       updatedFormElement.validation
     );
+    updatedLoginForm[formIndentifier] = updatedFormElement;
 
     let formIsValid = true;
     for (let formIndentifier in updatedLoginForm) {
       formIsValid = updatedLoginForm[formIndentifier].valid && formIsValid;
     }
-    updatedLoginForm[formIndentifier] = updatedFormElement;
     this.setState({ loginForm: updatedLoginForm, formIsValid: formIsValid });
   };
 

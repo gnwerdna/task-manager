@@ -6,11 +6,12 @@ const navigationItems = props => (
         <NavigationItem link="/" exact>Users</NavigationItem>
         { props.isAuth ? <>
             <NavigationItem link="/mytasks" >Tasks</NavigationItem>
-            <NavigationItem link="/logout">Logout</NavigationItem>
+            <NavigationItem link="/logout" clicked={props.logoutHandler}>Logout</NavigationItem>
             <NavigationItem link="/me">Me</NavigationItem>
             </>
-            : <><NavigationItem link="/login">Login</NavigationItem>
-        <NavigationItem link="/register" clicked={props.logoutHandler}>Signup</NavigationItem></>
+            : <>
+            <NavigationItem link="/login" clicked={props.loginHandler}>Login</NavigationItem>
+            <NavigationItem link="/register">Signup</NavigationItem></>
         }
         
    </ul>

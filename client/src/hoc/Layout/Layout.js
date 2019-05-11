@@ -34,7 +34,7 @@ class Layout extends React.Component {
       return {
         showSideDrawer: !prevState.showSideDrawer
       };
-    });
+    }); 
   };
   render() {
     return (
