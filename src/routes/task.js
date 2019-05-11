@@ -16,16 +16,9 @@ router.post("/me/task", auth, async (req, res) => {
   } catch (e) {
     res.status(400).send({err: "cannot create a task"});
   }
-  //   task
-  //     .save()
-  //     .then(() => {
-  //       res.send(task);
-  //     })
-  //     .catch(err => {
-  //       res.status(400);
-  //       res.send(err);
-  //     });
 });
+
+
 //GET /tasks?complete=true
 //GET /tasks?limit=true&skip=
 //pagination skip =sum - count before % limit
@@ -42,29 +35,12 @@ router.get("/tasks", auth, async (req, res) => {
       const parts = req.query.sortBy.split(":");
       sort[parts[0]] = parts[1] === "desc" ? 1 : -1;
     }
-    // const tasks = await Task.findOne({owner: req.user._id});
-    // await req.user[0]
-    //   .populate({
-    //     path: "tasks",
-    //     match,
-    //     option: {
-    //       limit: parseInt(req.query.limit),
-    //       skip: parseInt(req.query.skip),
-    //       sort
-    //     }
-    //   })
-    //   .execPopulate();
     const tasks = await Task.find({owner: req.user[0]._id})
     // console.log("tasks: " + req.user[0].tasks);
     res.status(200).send({tasks: tasks});
   } catch (e) {
     res.status(404).send({error: e.message});
   }
-  //   Task.find({})
-  //     .then(tasks => {
-  //       res.send(tasks);
-  //     })
-  //     .catch(err => res.send(err));
 });
 
 router.get("/tasks/:id", auth, async (req, res) => {
@@ -79,19 +55,10 @@ router.get("/tasks/:id", auth, async (req, res) => {
   } catch (e) {
     res.status(500).send(e);
   }
-  //   Task.findById(req.params.id)
-  //     .then(task => {
-  //       if (!task) {
-  //         return res.status(404).send("user not found!");
-  //       }
-  //       res.send(task);
-  //     })
-  //     .catch(err => res.status(500).send(err));
 });
 
 router.patch("/tasks/:id", auth, async (req, res) => {
   const updates = Object.keys(req.body);
-  console.log(req.params.id);
   const allowedUpdates = ["description", "complete"];
   const isValidOperation = updates.every(update =>
     allowedUpdates.includes(update)
@@ -105,6 +72,7 @@ router.patch("/tasks/:id", auth, async (req, res) => {
       _id: req.params.id,
       owner: req.user[0]._id
     });
+    console.log(task);
     // const task = await Task.findById(req.params.id);
     // const task = await Task.findByIdAndUpdate(req.params.id, req.body, {
     //   new: true,

@@ -134,18 +134,19 @@ class TaskBuilder extends React.Component {
 
   completeHandler = async (taskId) => {
     const tasks = this.state.tasksData;
-    // console.log(tasks[taskId]);
     tasks[taskId].complete = !tasks[taskId].complete;
     // const updateTask = {...tasks["taskId"]}
-    const data = await fetch(BASE_URL+"/task/"+tasks[taskId]._id, {
+    const complete = this.state.tasksData[taskId].complete;
+    console.log(complete);
+    this.setState({ tasksData: tasks });
+    const data = await fetch(BASE_URL+"/tasks/"+tasks[taskId]._id, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
         "Authorization": localStorage.getItem("token")
       },
-      body: JSON.stringify({ complete: this.state.tasksData[taskId].complete})
+      body: JSON.stringify({ complete: complete})
     })
-    this.setState({ tasksData: tasks });
   };
 
   render() {
