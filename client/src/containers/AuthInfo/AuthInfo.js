@@ -3,7 +3,9 @@ import Input from "../../components/UI/Input/Input";
 import Button from "../../components/UI/Button/Button";
 import classes from "./AuthInfo.module.css";
 import { BASE_URL } from "../../constant/abstract";
+import axios from "axios";
 import Aux from "../../hoc/Aux/Aux";
+import img from '../../assets/images/1557471586968-alcohol-architecture.jpg'
 class AuthInfo extends React.Component {
   state = {
     AuthInfo: {
@@ -59,7 +61,7 @@ class AuthInfo extends React.Component {
         touched: false
       }
     },
-    avatar: "",
+    avatar: null,
     errorMessage: null,
     formIsValid: true
   };
@@ -80,7 +82,7 @@ class AuthInfo extends React.Component {
             myData[i].value = user[i];
           }
         }
-        this.setState({ AuthInfo: myData });
+        this.setState({ AuthInfo: myData, avatar: user.avatar });
       });
   }
 
@@ -140,9 +142,22 @@ class AuthInfo extends React.Component {
     });
   };
 
+  onUploadAvatar = async () => {
+    const data = new FormData();
+    data.append("myImage", this.state.avatar);
+    const resData = await axios.post(BASE_URL + "/users/me/avatar", data, {
+      headers: {
+        Authorization: localStorage.getItem("token")
+      }
+    });
+    console.log(resData);
+    // const resDataJson = resData.json();
+    this.setState({avatar: resData.data.user})
+  };
+
   onPostAvatar = event => {
-    let file = event.target.files;
-    console.log(file);
+    let file = event.target.files[0];
+    this.setState({ avatar: file });
   };
 
   render() {
@@ -181,6 +196,10 @@ class AuthInfo extends React.Component {
         </Button>
       </Aux>
     );
+    let image = process.env.PUBLIC_URL+"/images/anh.jpg";
+    if(this.state.avatar) {
+      image = process.env.PUBLIC_URL+"/images/"+this.state.avatar;
+    }
     return (
       <div className={classes.AuthInfo}>
         <h2 style={{ textAlign: "center" }}>Your information</h2>
@@ -189,14 +208,15 @@ class AuthInfo extends React.Component {
           <div className={classes.Avatar}>
             <div className={classes.UploadAvatar}>
               <img
-                src="https://picsum.photos/300/300"
+                // src={img}
+                src={image}
                 width="300px"
                 height="300px"
                 alt="avatar"
               />
-              <input type="file" name="myfile" onChange={this.onPostAvatar} />
+              <input type="file" name="myImage" onChange={this.onPostAvatar} />
             </div>
-            <Button btnType="Info" clicked={this.onUploadAvatar}>
+            <Button clicked={this.onUploadAvatar} btnType="Info">
               Change avatar
             </Button>
           </div>

@@ -13,11 +13,15 @@ class User extends React.Component {
     });
   };
   render() {
+    let image = process.env.PUBLIC_URL+"/images/anh.jpg";
+    if(this.props.user.avatar) {
+      image = process.env.PUBLIC_URL+"/images/"+this.props.user.avatar;
+    }
     return (
       <div className={classes.User}>
         <div>
           <AvatarModal
-            src="https://picsum.photos/200"
+            src={image}
             showModal={this.state.showModal}
             modalToggle={this.showModalHandler}
           />

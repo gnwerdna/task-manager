@@ -3,7 +3,6 @@ const router = new express.Router();
 const auth = require("../middleware/auth");
 const User = require("../models/user"); 
 const multer = require("multer");
-const storage = multer.memoryStorage();
 const { sendWelcomeEmail, sendCancelledEmail } = require("../emails/account");
 
 //get all user
@@ -141,6 +140,35 @@ router.patch("/users/me", auth, async (req, res) => {
 //   }
 // });
 
+
+////////upload file
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "./client/public/images/")
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + "-" + file.originalname)
+  }
+})
+
+const upload =multer({storage: storage}).single("myImage");
+router.post("/users/me/avatar", auth, (req, res) => {
+  upload(req, res, err => {
+    if(err instanceof multer.MulterError) {
+      return res.status(200).json("fiest");
+    } else if (err) {
+      return res.status(200).json("two");
+    }
+    req.user[0].avatar = req.file.filename;
+    // console.log(req.user);
+    // console.log(req.file);
+    req.user[0].save();
+  })
+  return res.status(200).send({user: req.user[0].avatar});
+})
+
+
+
 router.delete("/users/me", auth, async (req, res) => {
   try {
     await req.user[0].remove();
@@ -150,48 +178,6 @@ router.delete("/users/me", auth, async (req, res) => {
     res.status(500).send(e);
   }
 });
-
-const upload = multer({
-  dest: "avatars",
-  fileFilter(req, file, cb) {
-    if (!file.originalname.endsWith(".jpg")) {
-      return cb(new Error("please upload a jpg file."));
-    }
-    cb(undefined, true);
-    req.file = file;
-    console.log(file);
-  },
-  storage: storage
-});
-//can use sharp when resize image
-router.post(
-  "/users/me/avatar",
-  auth,
-  upload.single("avatar"),
-  async (req, res) => {
-    // console.log(req.file.buffer);
-    req.user[0].avatar = req.file.buffer;
-    // console.log(req.user[0]);
-    // console.log(req.file.buffer);
-    await req.user[0].save();
-    res.send("success.");
-  },
-  (error, req, res) => {
-    res.status(400).send({ error: error });
-  }
-);
-
-// router.delete("/users/:id", async (req, res) => {
-//   try {
-//     const user = await User.findByIdAndDelete(req.params.id);
-//     if (!user) {
-//       return res.status(404).send("cannot find this user");
-//     }
-//     res.send(user);
-//   } catch (e) {
-//     res.status(500).send(e);
-//   }
-// });
 
 router.delete("/users/me/avatar", auth, async (req, res) => {
   try {

@@ -9,7 +9,7 @@ const toolbar = props => (
       <div className={classes.Home}>TASKS MANAGER</div>
     </div>
     <nav className={classes.DesktopOnly}>
-      <NavigationItems />
+      <NavigationItems isAuth={props.isAuth} logoutHandler={props.logoutHandler}/>
     </nav>
   </header>
 );
